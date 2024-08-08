@@ -1,6 +1,8 @@
 const express = require("express");
 const {connectToDB} = require("./connection")
-const urlRouter = require("./Routers/url")
+const urlRoute = require("./Routers/url")
+const viewRoute = require("./Routers/static")
+const path = require("path")
 const app = express();
 const PORT = 8000
 
@@ -10,10 +12,14 @@ connectToDB("mongodb://127.0.0.1:27017/url-shortener").then(()=>{console.log("da
 // middleware
 
 app.use(express.json());
+app.use(express.urlencoded({extended : false})) // form data
 
+app.set("view engine","ejs");
+app.set("views",path.resolve("./Views"))
 
 // router
-app.use("/url",urlRouter)
+app.use("/url",urlRoute)
+app.get("/",viewRoute)
 
 
 

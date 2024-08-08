@@ -30,7 +30,7 @@ async function handlePostUrl(req,res) {
     })
  
 
-    return res.status(200).json({success:id})
+    return res.render("home",{shortid : id})
 
 }
 
